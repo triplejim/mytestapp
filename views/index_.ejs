@@ -1,0 +1,37 @@
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+var socket = new io.Socket();
+// サーバに接続する
+socket.connect();
+// サーバに接続したとき
+socket.on('connect', function(msg) {
+  document.getElementById("connectId").innerHTML = 
+    "あなたの接続ID::" + socket.transport.sessionid;
+});
+
+// メッセージを受けたとき
+socket.on('message', function(msg) {
+  document.getElementById("receiveMsg").innerHTML = msg;
+});
+
+// メッセージを送る
+function SendMsg() {
+  var msg = document.getElementById("message").value;
+  socket.send(msg);
+}
+// 切断する
+function DisConnect() {
+  socket.send(socket.transport.sessionid + "は切断しました。");
+  socket.disconnect();
+}
+</script>
+
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+  </body>
+>
